@@ -12,10 +12,11 @@ func NewRootCmd() *cobra.Command {
 }
 
 func Execute() {
-	cmd := NewRootCmd()
+	rootCmd := NewRootCmd()
 	// Add commands
+	rootCmd.AddCommand(NewCommandCmd())
 
-	if err := cmd.Execute(); err != nil {
+	if err := rootCmd.Execute(); err != nil {
 		// TODO: handle this more gracefully
 		panic(err)
 	}
