@@ -6,7 +6,19 @@ Author: Brian Cain
 
 ## Getting Started
 
-TODO
+1. Install the provider to your local machine
+
+From Github:
+
+```shell
+devpod provider add briancain/devpod-provider-nomad
+```
+
+2. Use the provider
+
+```shell
+devpod up <repository-url> --provider nomad
+```
 
 ## Testing Locally
 
