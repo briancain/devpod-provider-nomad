@@ -80,6 +80,7 @@ func (n *Nomad) Status(
 // Run a command on the instance
 func (n *Nomad) CommandDevContainer(
 	ctx context.Context,
+	jobID string,
 	user string,
 	command string,
 	stdin io.Reader,

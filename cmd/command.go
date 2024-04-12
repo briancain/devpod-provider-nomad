@@ -41,6 +41,7 @@ func (cmd *CommandCmd) Run(
 	}
 
 	return nomad.CommandDevContainer(ctx,
+		options.JobId,
 		os.Getenv("DEVCONTAINER_USER"),
 		os.Getenv("DEVCONTAINER_COMMAND"),
 		os.Stdin,
