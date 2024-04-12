@@ -18,6 +18,7 @@ func Execute() {
 	rootCmd.AddCommand(NewInitCmd())
 	rootCmd.AddCommand(NewCreateCmd())
 	rootCmd.AddCommand(NewDeleteCmd())
+	rootCmd.AddCommand(NewStatusCmd())
 
 	if err := rootCmd.Execute(); err != nil {
 		// TODO: handle this more gracefully
