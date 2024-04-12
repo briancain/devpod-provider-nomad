@@ -8,6 +8,11 @@ build: # Build the project
 test: # Test the project
 	@go test -v ./...
 
+.PHONY: release
+release: # Release the project
+	@go mod vendor
+	@RELEASE_VERSION=${TAG} ./hack/build.sh
+
 .PHONY: format
 format: # Format all go code in project
 	@gofmt -s -w ./
