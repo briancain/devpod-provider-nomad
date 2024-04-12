@@ -90,7 +90,7 @@ func (n *Nomad) CommandDevContainer(
 	// The devpod workspace
 	workspaceId := "devpod-" + "nomad"
 
-	// TODO
+	// TODO use ActionExec instead?
 	// Exec into the allocation to run the devpod command
 	// We might have to find the alloc
 	args := []string{"alloc", "exec", "-c", "devpod"}
