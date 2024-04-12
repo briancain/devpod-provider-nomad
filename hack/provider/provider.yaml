@@ -19,12 +19,30 @@ agent:
   injectGitCredentials: ${INJECT_GIT_CREDENTIALS}
   injectDockerCredentials: ${INJECT_DOCKER_CREDENTIALS}
 binaries:  # Optional binaries DevPod should download for this provider
-  NOMAD_PROVIDER: # Will be available as MY_BINARY environment variable in the exec section
+  NOMAD_PROVIDER: # Will be available as NOMAD_PROVIDER environment variable in the exec section
+    - os: linux
+        arch: amd64
+        path: https://github.com/briancain/devpod-provider-nomad/releases/download/##VERSION##/devpod-provider-nomad-linux-amd64
+        checksum: ##CHECKSUM_LINUX_AMD64##
+      - os: linux
+        arch: arm64
+        path: https://github.com/briancain/devpod-provider-nomad/releases/download/##VERSION##/devpod-provider-nomad-linux-arm64
+        checksum: ##CHECKSUM_LINUX_ARM64##
+      - os: darwin
+        arch: amd64
+        path: https://github.com/briancain/devpod-provider-nomad/releases/download/##VERSION##/devpod-provider-nomad-darwin-amd64
+        checksum: ##CHECKSUM_DARWIN_AMD64##
+      - os: darwin
+        arch: arm64
+        path: https://github.com/briancain/devpod-provider-nomad/releases/download/##VERSION##/devpod-provider-nomad-darwin-arm64
+        checksum: ##CHECKSUM_DARWIN_ARM64##
+      - os: windows
+        arch: amd64
+        path: https://github.com/briancain/devpod-provider-nomad/releases/download/##VERSION##/devpod-provider-nomad-windows-amd64.exe
+        checksum: ##CHECKSUM_WINDOWS_AMD64##
 exec:
   command: ${NOMAD_PROVIDER} command # The command to run
   create:  ${NOMAD_PROVIDER} create # Optional: a command to create the machine
   delete:  ${NOMAD_PROVIDER} delete # Optional: a command to delete the machine
-  start:   ${NOMAD_PROVIDER} start # Optional: a command to start the machine
-  stop:    ${NOMAD_PROVIDER} stop # Optional: a command to stop the machine
   status:  ${NOMAD_PROIDER} status # Optional: a command to get the machine's status
   init:    ${NOMAD_PROVIDER} init # Optional: a command to init the provider, login to an account or similar
