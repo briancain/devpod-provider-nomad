@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/briancain/devpod-provider-nomad/pkg/nomad"
 	"github.com/briancain/devpod-provider-nomad/pkg/options"
@@ -39,5 +40,10 @@ func (cmd *InitCmd) Run(
 		return err
 	}
 
-	return nomad.Init(ctx)
+	if err := nomad.Init(ctx); err != nil {
+		return err
+	}
+
+	fmt.Println("Nomad is ready")
+	return nil
 }
