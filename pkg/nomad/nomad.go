@@ -79,6 +79,7 @@ func (n *Nomad) CommandDevContainer(
 
 	// TODO
 	// Exec into the allocation to run the devpod command
+	// We might have to find the alloc
 	args := []string{"alloc", "exec", "-c", "devpod"}
 	if stdin != nil {
 		args = append(args, "-i")
