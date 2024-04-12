@@ -4,6 +4,12 @@ Author: Brian Cain
 
 [![Go](https://github.com/briancain/devpod-provider-nomad/actions/workflows/go.yml/badge.svg)](https://github.com/briancain/devpod-provider-nomad/actions/workflows/go.yml) [![Release](https://github.com/briancain/devpod-provider-nomad/actions/workflows/release.yml/badge.svg)](https://github.com/briancain/devpod-provider-nomad/actions/workflows/release.yml)
 
+This is a provider for [devpod](https://devpod.sh/) that allows you to create a
+devpod using [HashiCorp Nomad](https://www.nomadproject.io/).
+
+Please report any issues or feature requests to the
+[Github Issues](https://github.com/briancain/devpod-provider-nomad/issues) page.
+
 [devpod.sh](https://devpod.sh/)
 
 ## Getting Started
