@@ -18,13 +18,13 @@ agent:
   inactivityTimeout: ${INACTIVITY_TIMEOUT}
   injectGitCredentials: ${INJECT_GIT_CREDENTIALS}
   injectDockerCredentials: ${INJECT_DOCKER_CREDENTIALS}
-exec:
-  command: # Required: a command to execute on the remote machine or container
-  init:    # Optional: a command to init the provider, login to an account or similar
-  create:  # Optional: a command to create the machine
-  delete:  # Optional: a command to delete the machine
-  start:   # Optional: a command to start the machine
-  stop:    # Optional: a command to stop the machine
-  status:  # Optional: a command to get the machine's status
 binaries:  # Optional binaries DevPod should download for this provider
-  MY_BINARY: # Will be available as MY_BINARY environment variable in the exec section
+  NOMAD_PROVIDER: # Will be available as MY_BINARY environment variable in the exec section
+exec:
+  command: ${NOMAD_PROVIDER} command # The command to run
+  create:  ${NOMAD_PROVIDER} create # Optional: a command to create the machine
+  delete:  ${NOMAD_PROVIDER} delete # Optional: a command to delete the machine
+  start:   ${NOMAD_PROVIDER} start # Optional: a command to start the machine
+  stop:    ${NOMAD_PROVIDER} stop # Optional: a command to stop the machine
+  status:  ${NOMAD_PROIDER} status # Optional: a command to get the machine's status
+  init:    # Optional: a command to init the provider, login to an account or similar
