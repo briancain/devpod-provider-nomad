@@ -1,0 +1,48 @@
+name:  nomad
+version: 0.0.1
+description: |-
+	DevPod on Nomad
+icon: https://url-to-icon.com  # Shown in the Desktop App
+options:
+  # Options for the provider, DevPod will pass these as
+  # ENV Variables when calling the provider
+  AGENT_PATH:
+    description: The path where to inject the DevPod agent to.
+    default: /home/devpod/.devpod/devpod
+  AGENT_DATA_PATH:
+    description: The path where to store the agent data.
+    default: /home/devpod/.devpod/agent
+agent:
+  path: ${AGENT_PATH}
+  dataPath: ${AGENT_DATA_PATH}
+  inactivityTimeout: ${INACTIVITY_TIMEOUT}
+  injectGitCredentials: ${INJECT_GIT_CREDENTIALS}
+  injectDockerCredentials: ${INJECT_DOCKER_CREDENTIALS}
+binaries:  # Optional binaries DevPod should download for this provider
+  NOMAD_PROVIDER: # Will be available as NOMAD_PROVIDER environment variable in the exec section
+    - os: linux
+        arch: amd64
+        path: /Users/brian/code/devpod-provider-nomad/release/devpod-provider-nomad-linux-amd64
+        checksum: 585b00babe3d7040c3cea48aef214472658a7f4358f5888a0a799ac7918424e7
+      - os: linux
+        arch: arm64
+        path: /Users/brian/code/devpod-provider-nomad/release/devpod-provider-nomad-linux-arm64
+        checksum: dc08231f70e384aa1cbf31f7cf55d30d924682212bdfff69904f74a09abd45e9
+      - os: darwin
+        arch: amd64
+        path: /Users/brian/code/devpod-provider-nomad/release/devpod-provider-nomad-darwin-amd64
+        checksum: c4651d53430b269ee92add83d3f22fbb00aa910970f71c9fe8a5b62fa9646b40
+      - os: darwin
+        arch: arm64
+        path: /Users/brian/code/devpod-provider-nomad/release/devpod-provider-nomad-darwin-arm64
+        checksum: 969ea3f5ed2ffaf33479843441a3f7eaa3f459f9c11025fb3bb302e47cf0f220
+      - os: windows
+        arch: amd64
+        path: /Users/brian/code/devpod-provider-nomad/release/devpod-provider-nomad-windows-amd64.exe
+        checksum: 201f080a27faec476bdd649fd91ce03d2d95c799a6a7d45954cc5e8ec60c8fd2
+exec:
+  command: ${NOMAD_PROVIDER} command # The command to run
+  create:  ${NOMAD_PROVIDER} create # Optional: a command to create the machine
+  delete:  ${NOMAD_PROVIDER} delete # Optional: a command to delete the machine
+  status:  ${NOMAD_PROIDER} status # Optional: a command to get the machine's status
+  init:    ${NOMAD_PROVIDER} init # Optional: a command to init the provider, login to an account or similar
