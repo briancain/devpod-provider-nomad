@@ -1,7 +1,7 @@
 name:  nomad
 version: 0.0.1
 description: |-
-	DevPod on Nomad
+  DevPod on Nomad
 icon: https://url-to-icon.com  # Shown in the Desktop App
 options:
   # Options for the provider, DevPod will pass these as
