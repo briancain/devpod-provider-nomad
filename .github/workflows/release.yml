@@ -21,6 +21,7 @@ jobs:
           echo "::set-output name=release_version::$RELEASE_VERSION"
       - name: Compile binaries
         run: |
+          go mod vendor
           chmod +x ./hack/build.sh
           ./hack/build.sh
         env:
