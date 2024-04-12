@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "github.com/briancain/devpod-provider-nomad/cmd"
 
 func main() {
-	fmt.Println("devpod-provider-nomad")
+	cmd.Execute()
 }
