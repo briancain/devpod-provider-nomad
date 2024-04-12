@@ -3,17 +3,13 @@ package options
 import "os"
 
 type Options struct {
-	MachineID     string
-	MachineFolder string
-
-	DiskImage   string
-	DiskSize    string
-	MachineType string
-	Token       string
+	DiskSize string
+	Token    string
 
 	JobId       string
 	NomadBinary string
 	Namespace   string
+	Region      string
 }
 
 // Read ENV Vars for option overrides
@@ -24,14 +20,12 @@ func FromEnv() (*Options, error) {
 
 func DefaultOptions() *Options {
 	return &Options{
-		MachineID:     "devpod",
-		MachineFolder: "/tmp/devpod",
-		DiskImage:     "ubuntu",
-		DiskSize:      "10G",
-		MachineType:   "qemu",
-		Token:         "",
-		JobId:         "devpod-job",
-		NomadBinary:   getEnv("NOMAD_BINARY", "nomad"),
+		DiskSize:    "10G",
+		Token:       "",
+		Namespace:   "",
+		Region:      "",
+		JobId:       "devpod-job",
+		NomadBinary: getEnv("NOMAD_BINARY", "nomad"),
 	}
 }
 
