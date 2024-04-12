@@ -9,6 +9,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const (
+	defaultImage = "alpine"
+)
+
 // CreateCmd holds the cmd flags
 type CreateCmd struct{}
 
@@ -40,18 +44,37 @@ func (cmd *CreateCmd) Run(
 		return err
 	}
 
+	image := defaultImage
+	if options.DriverOpts != nil && options.DriverOpts.Image != "" {
+		image = options.DriverOpts.Image
+	}
+
 	// TODO(briancain): add more fields
 	jobName := "devpod"
 	job := &api.Job{
 		ID:        &options.JobId,
 		Name:      &jobName,
 		Namespace: &options.Namespace,
+		TaskGroups: []*api.TaskGroup{
+			{
+				Name: &jobName,
+				Tasks: []*api.Task{
+					{
+						Name: "devpod",
+						Config: map[string]interface{}{
+							"image": image,
+						},
+						Driver: "docker",
+					},
+				},
+			},
+		},
 	}
 
-	// Do something with the evalID?
 	_, err = nomad.Create(ctx, job)
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
