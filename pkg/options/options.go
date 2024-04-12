@@ -13,6 +13,7 @@ type Options struct {
 
 	JobId       string
 	NomadBinary string
+	Namespace   string
 }
 
 // Read ENV Vars for option overrides
@@ -29,7 +30,7 @@ func DefaultOptions() *Options {
 		DiskSize:      "10G",
 		MachineType:   "qemu",
 		Token:         "",
-		JobId:         "",
+		JobId:         "devpod-job",
 		NomadBinary:   getEnv("NOMAD_BINARY", "nomad"),
 	}
 }

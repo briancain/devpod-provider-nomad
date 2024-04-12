@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"context"
-	"errors"
 
 	"github.com/briancain/devpod-provider-nomad/pkg/nomad"
 	"github.com/briancain/devpod-provider-nomad/pkg/options"
+	"github.com/hashicorp/nomad/api"
 	"github.com/spf13/cobra"
 )
 
@@ -35,11 +35,23 @@ func (cmd *CreateCmd) Run(
 	ctx context.Context,
 	options *options.Options,
 ) error {
-	_, err := nomad.NewNomad(options)
+	nomad, err := nomad.NewNomad(options)
 	if err != nil {
 		return err
 	}
 
-	// return nomad.Create(ctx)
-	return errors.New("Not implemented")
+	// TODO(briancain): add more fields
+	jobName := "devpod"
+	job := &api.Job{
+		ID:        &options.JobId,
+		Name:      &jobName,
+		Namespace: &options.Namespace,
+	}
+
+	// Do something with the evalID?
+	_, err = nomad.Create(ctx, job)
+	if err != nil {
+		return err
+	}
+	return nil
 }

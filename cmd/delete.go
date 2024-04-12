@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"context"
-	"errors"
 
 	"github.com/briancain/devpod-provider-nomad/pkg/nomad"
 	"github.com/briancain/devpod-provider-nomad/pkg/options"
@@ -35,11 +34,10 @@ func (cmd *DeleteCmd) Run(
 	ctx context.Context,
 	options *options.Options,
 ) error {
-	_, err := nomad.NewNomad(options)
+	nomad, err := nomad.NewNomad(options)
 	if err != nil {
 		return err
 	}
 
-	// return nomad.Delete(ctx)
-	return errors.New("Not implemented")
+	return nomad.Delete(ctx, options.JobId)
 }
