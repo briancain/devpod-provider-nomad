@@ -2,6 +2,8 @@
 
 Author: Brian Cain
 
+[![Go](https://github.com/briancain/devpod-provider-nomad/actions/workflows/go.yml/badge.svg)](https://github.com/briancain/devpod-provider-nomad/actions/workflows/go.yml) [![Release](https://github.com/briancain/devpod-provider-nomad/actions/workflows/release.yml/badge.svg)](https://github.com/briancain/devpod-provider-nomad/actions/workflows/release.yml)
+
 [devpod.sh](https://devpod.sh/)
 
 ## Getting Started
