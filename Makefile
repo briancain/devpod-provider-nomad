@@ -18,6 +18,21 @@ release: # Release the project
 format: # Format all go code in project
 	@gofmt -s -w ./
 
+## Dev Helpers ##
+
+.PHONY: dev/start-nomad
+dev/start-nomad: # Start a local Nomad server for testing
+	@nomad agent -dev -bind=0.0.0.0 > /tmp/nomad.log 2>&1 &
+	@echo "Nomad started on http://localhost:4646"
+	@echo "Nomad logs are in /tmp/nomad.log"
+
+.PHONY: dev/stop-nomad
+dev/stop-nomad: # Stop a local Nomad server
+	@pkill nomad
+	@echo "Nomad stopped"
+
+## END Dev Helpers END ##
+
 .PHONY: help
 help: # Print valid Make targets
 	@echo "Valid targets:"
