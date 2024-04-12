@@ -1,0 +1,30 @@
+name:  nomad
+version: 0.0.1
+description: |-
+	DevPod on Nomad
+icon: https://url-to-icon.com  # Shown in the Desktop App
+options:
+  # Options for the provider, DevPod will pass these as
+  # ENV Variables when calling the provider
+  AGENT_PATH:
+    description: The path where to inject the DevPod agent to.
+    default: /home/devpod/.devpod/devpod
+  AGENT_DATA_PATH:
+    description: The path where to store the agent data.
+    default: /home/devpod/.devpod/agent
+agent:
+  path: ${AGENT_PATH}
+  dataPath: ${AGENT_DATA_PATH}
+  inactivityTimeout: ${INACTIVITY_TIMEOUT}
+  injectGitCredentials: ${INJECT_GIT_CREDENTIALS}
+  injectDockerCredentials: ${INJECT_DOCKER_CREDENTIALS}
+exec:
+  command: # Required: a command to execute on the remote machine or container
+  init:    # Optional: a command to init the provider, login to an account or similar
+  create:  # Optional: a command to create the machine
+  delete:  # Optional: a command to delete the machine
+  start:   # Optional: a command to start the machine
+  stop:    # Optional: a command to stop the machine
+  status:  # Optional: a command to get the machine's status
+binaries:  # Optional binaries DevPod should download for this provider
+  MY_BINARY: # Will be available as MY_BINARY environment variable in the exec section
