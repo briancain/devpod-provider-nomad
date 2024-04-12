@@ -15,6 +15,7 @@ func Execute() {
 	rootCmd := NewRootCmd()
 	// Add commands
 	rootCmd.AddCommand(NewCommandCmd())
+	rootCmd.AddCommand(NewInitCmd())
 
 	if err := rootCmd.Execute(); err != nil {
 		// TODO: handle this more gracefully

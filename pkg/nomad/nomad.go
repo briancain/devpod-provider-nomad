@@ -28,6 +28,18 @@ func NewNomad(opts *options.Options) (*Nomad, error) {
 	}, nil
 }
 
+func (n *Nomad) Init(
+	ctx context.Context,
+) error {
+	// List nomad jobs to confirm we can connect
+	_, _, err := n.client.Jobs().List(nil)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (n *Nomad) Create(
 	ctx context.Context,
 	job *api.Job,

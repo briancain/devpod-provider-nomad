@@ -27,4 +27,4 @@ exec:
   start:   ${NOMAD_PROVIDER} start # Optional: a command to start the machine
   stop:    ${NOMAD_PROVIDER} stop # Optional: a command to stop the machine
   status:  ${NOMAD_PROIDER} status # Optional: a command to get the machine's status
-  init:    # Optional: a command to init the provider, login to an account or similar
+  init:    ${NOMAD_PROVIDER} init # Optional: a command to init the provider, login to an account or similar
