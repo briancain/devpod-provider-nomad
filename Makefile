@@ -1,4 +1,5 @@
-TAG=0.0.1
+# Get the latest git tag
+TAG=$(shell git describe --tags --abbrev=0)
 
 .PHONY: build
 build: # Build the project
