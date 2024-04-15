@@ -41,7 +41,7 @@ func (cmd *StatusCmd) Run(
 		return err
 	}
 
-	status, err := nomad.Status(ctx, options.JobId)
+	status, _, err := nomad.Status(ctx, options.JobId)
 	if err != nil {
 		return fmt.Errorf("failed to get status of job %q: %w", options.JobId, err)
 	}

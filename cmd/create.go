@@ -60,7 +60,7 @@ func (cmd *CreateCmd) Run(
 				Name: &jobName,
 				Tasks: []*api.Task{
 					{
-						Name: "devpod",
+						Name: options.TaskName,
 						Config: map[string]interface{}{
 							"image": image,
 						},

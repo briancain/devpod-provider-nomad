@@ -3,7 +3,11 @@ package nomad
 import (
 	"context"
 	"errors"
+	"fmt"
 	"io"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/briancain/devpod-provider-nomad/pkg/options"
 	"github.com/hashicorp/nomad/api"
@@ -65,29 +69,29 @@ func (n *Nomad) Delete(
 func (n *Nomad) Status(
 	ctx context.Context,
 	jobID string,
-) (client.Status, error) {
+) (client.Status, *api.Job, error) {
 	job, _, err := n.client.Jobs().Info(jobID, nil)
 	if err != nil {
-		return client.StatusNotFound, err
+		return client.StatusNotFound, job, err
 	}
 
 	status := *job.Status
 	switch status {
 	case "pending":
-		return client.StatusBusy, nil
+		return client.StatusBusy, job, nil
 	case "running":
-		return client.StatusRunning, nil
+		return client.StatusRunning, job, nil
 	case "complete":
-		return client.StatusStopped, nil
+		return client.StatusStopped, job, nil
 	case "dead":
-		return client.StatusStopped, nil
+		return client.StatusStopped, job, nil
 	case "":
-		return client.StatusNotFound, nil
+		return client.StatusNotFound, job, nil
 	default:
-		return client.StatusNotFound, nil
+		return client.StatusNotFound, job, nil
 	}
 
-	return client.StatusNotFound, nil
+	return client.StatusNotFound, job, nil
 }
 
 // Untested
@@ -100,6 +104,56 @@ func (n *Nomad) CommandDevContainer(
 	stdin io.Reader,
 	stdout io.Writer,
 	stderr io.Writer,
-) error {
-	return errors.New("not implemented")
+) (int, error) {
+	ctx, cancelFn := context.WithCancel(ctx)
+	defer cancelFn()
+
+	// Check if the job is running
+	status, _, err := n.Status(ctx, jobID)
+	if err != nil {
+		return -1, err
+	}
+	if status != client.StatusRunning {
+		return -1, errors.New("job is not running")
+	}
+
+	// Get our allocation ID to exec into
+	allocs, _, err := n.client.Jobs().Allocations(jobID, false, nil)
+	if err != nil {
+		return -1, err
+	}
+	if len(allocs) == 0 {
+		return -1, fmt.Errorf("job %q has no allocations found", jobID)
+	}
+	// Check for running allocations
+	var allocID string
+	for _, alloc := range allocs {
+		if alloc.ClientStatus == "running" {
+			// Pick the first one
+			allocID = alloc.ID
+			break
+		}
+	}
+	if allocID == "" {
+		return -1, fmt.Errorf("job %q has no running allocations found", jobID)
+	}
+
+	alloc, _, err := n.client.Allocations().Info(allocID, nil)
+	if err != nil {
+		return -1, err
+	}
+	// TODO: make this an options
+	task := "devpod"
+	signalCh := make(chan os.Signal, 1)
+	signal.Notify(signalCh, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		for range signalCh {
+			cancelFn()
+		}
+	}()
+
+	sizeCh := make(chan api.TerminalSize, 1)
+
+	return n.client.Allocations().Exec(ctx, alloc, task, true, []string{command},
+		stdin, stdout, stderr, sizeCh, nil)
 }

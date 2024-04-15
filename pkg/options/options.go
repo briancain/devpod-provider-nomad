@@ -15,6 +15,7 @@ type Options struct {
 	JobId     string
 	Namespace string
 	Region    string
+	TaskName  string
 
 	DriverOpts *driver.RunOptions
 }
@@ -45,6 +46,7 @@ func DefaultOptions() (*Options, error) {
 		Token:      "",
 		Namespace:  "",
 		Region:     "",
+		TaskName:   "devpod",
 		JobId:      getEnv("DEVCONTAINER_ID", "devpod-nomad"), // set by devpod
 		DriverOpts: runOptions,
 	}, nil

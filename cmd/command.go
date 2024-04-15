@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"os"
 
 	"github.com/briancain/devpod-provider-nomad/pkg/nomad"
@@ -40,7 +42,7 @@ func (cmd *CommandCmd) Run(
 		return err
 	}
 
-	return nomad.CommandDevContainer(ctx,
+	code, err := nomad.CommandDevContainer(ctx,
 		options.JobId,
 		os.Getenv("DEVCONTAINER_USER"),
 		os.Getenv("DEVCONTAINER_COMMAND"),
@@ -48,4 +50,12 @@ func (cmd *CommandCmd) Run(
 		os.Stdout,
 		os.Stderr,
 	)
+	if err != nil {
+		return err
+	}
+	if code != 0 {
+		return errors.New(fmt.Sprintf("command failed with exit code %d", code))
+	}
+
+	return nil
 }
