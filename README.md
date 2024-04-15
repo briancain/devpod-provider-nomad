@@ -1,11 +1,11 @@
-# Devpod Provider for Nomad
+# DevPod Provider for Nomad
 
 Author: Brian Cain
 
 [![Go](https://github.com/briancain/devpod-provider-nomad/actions/workflows/go.yml/badge.svg)](https://github.com/briancain/devpod-provider-nomad/actions/workflows/go.yml) [![Release](https://github.com/briancain/devpod-provider-nomad/actions/workflows/release.yml/badge.svg)](https://github.com/briancain/devpod-provider-nomad/actions/workflows/release.yml)
 
-This is a provider for [devpod](https://devpod.sh/) that allows you to create a
-devpod using [HashiCorp Nomad](https://www.nomadproject.io/).
+This is a provider for [DevPod](https://devpod.sh/) that allows you to create a
+DevPod using [HashiCorp Nomad](https://www.nomadproject.io/).
 
 Please report any issues or feature requests to the
 [Github Issues](https://github.com/briancain/devpod-provider-nomad/issues) page.
@@ -40,7 +40,7 @@ TODO
 RELEASE_VERSION=0.0.1-dev ./hack/build.sh --dev
 ```
 
-2. Delete the old provider from devpod
+2. Delete the old provider from DevPod
 
 ```shell
 devpod provider delete nomad
