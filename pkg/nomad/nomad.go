@@ -7,6 +7,7 @@ import (
 
 	"github.com/briancain/devpod-provider-nomad/pkg/options"
 	"github.com/hashicorp/nomad/api"
+	"github.com/loft-sh/devpod/pkg/client"
 )
 
 type Nomad struct {
@@ -64,13 +65,29 @@ func (n *Nomad) Delete(
 func (n *Nomad) Status(
 	ctx context.Context,
 	jobID string,
-) (*api.Job, error) {
+) (client.Status, error) {
 	job, _, err := n.client.Jobs().Info(jobID, nil)
 	if err != nil {
-		return nil, err
+		return client.StatusNotFound, err
 	}
 
-	return job, nil
+	status := *job.Status
+	switch status {
+	case "pending":
+		return client.StatusBusy, nil
+	case "running":
+		return client.StatusRunning, nil
+	case "complete":
+		return client.StatusStopped, nil
+	case "dead":
+		return client.StatusStopped, nil
+	case "":
+		return client.StatusNotFound, nil
+	default:
+		return client.StatusNotFound, nil
+	}
+
+	return client.StatusNotFound, nil
 }
 
 // Untested
