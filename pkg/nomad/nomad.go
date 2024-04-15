@@ -2,8 +2,8 @@ package nomad
 
 import (
 	"context"
+	"errors"
 	"io"
-	"os/exec"
 
 	"github.com/briancain/devpod-provider-nomad/pkg/options"
 	"github.com/hashicorp/nomad/api"
@@ -12,8 +12,6 @@ import (
 type Nomad struct {
 	// Nomad client
 	client *api.Client
-
-	nomadBinary string
 }
 
 func NewNomad(opts *options.Options) (*Nomad, error) {
@@ -23,8 +21,7 @@ func NewNomad(opts *options.Options) (*Nomad, error) {
 	}
 
 	return &Nomad{
-		client:      client,
-		nomadBinary: opts.NomadBinary,
+		client: client,
 	}, nil
 }
 
@@ -87,38 +84,5 @@ func (n *Nomad) CommandDevContainer(
 	stdout io.Writer,
 	stderr io.Writer,
 ) error {
-	// The devpod workspace
-	workspaceId := "devpod-" + "nomad"
-
-	// TODO use ActionExec instead?
-	// Exec into the allocation to run the devpod command
-	// We might have to find the alloc
-	args := []string{"alloc", "exec", "-c", "devpod"}
-	if stdin != nil {
-		args = append(args, "-i")
-	}
-	args = append(args, workspaceId)
-	if user != "" && user != "root" {
-		args = append(args, "--", "su", user, "-c", command)
-	} else {
-		args = append(args, "--", "sh", "-c", command)
-	}
-
-	return n.runCommand(ctx, args, stdin, stdout, stderr)
-}
-
-func (n *Nomad) runCommand(
-	ctx context.Context,
-	args []string,
-	stdin io.Reader,
-	stdout io.Writer,
-	stderr io.Writer,
-) error {
-	// TODO(briancain): add any nomad context here?
-	cmd := exec.Command(n.nomadBinary, args...)
-	cmd.Stdin = stdin
-	cmd.Stdout = stdout
-	cmd.Stderr = stderr
-
-	return cmd.Run()
+	return errors.New("not implemented")
 }

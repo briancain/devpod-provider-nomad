@@ -12,10 +12,9 @@ type Options struct {
 	DiskSize string
 	Token    string
 
-	JobId       string
-	NomadBinary string
-	Namespace   string
-	Region      string
+	JobId     string
+	Namespace string
+	Region    string
 
 	DriverOpts *driver.RunOptions
 }
@@ -42,13 +41,12 @@ func DefaultOptions() (*Options, error) {
 	}
 
 	return &Options{
-		DiskSize:    "10G",
-		Token:       "",
-		Namespace:   "",
-		Region:      "",
-		JobId:       getEnv("DEVCONTAINER_ID", "devpod-nomad"), // set by devpod
-		NomadBinary: getEnv("NOMAD_BINARY", "nomad"),
-		DriverOpts:  runOptions,
+		DiskSize:   "10G",
+		Token:      "",
+		Namespace:  "",
+		Region:     "",
+		JobId:      getEnv("DEVCONTAINER_ID", "devpod-nomad"), // set by devpod
+		DriverOpts: runOptions,
 	}, nil
 }
 
