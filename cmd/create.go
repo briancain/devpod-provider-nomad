@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/briancain/devpod-provider-nomad/pkg/nomad"
 	"github.com/briancain/devpod-provider-nomad/pkg/options"
@@ -49,7 +50,20 @@ func (cmd *CreateCmd) Run(
 		image = options.DriverOpts.Image
 	}
 
-	// TODO(briancain): add more fields
+	cpu, err := strconv.Atoi(options.CPU)
+	if err != nil {
+		return err
+	}
+	mem, err := strconv.Atoi(options.MemoryMB)
+	if err != nil {
+		return err
+	}
+
+	jobResources := &api.Resources{
+		CPU:      &cpu,
+		MemoryMB: &mem,
+	}
+
 	jobName := "devpod"
 	job := &api.Job{
 		ID:        &options.JobId,
@@ -65,7 +79,8 @@ func (cmd *CreateCmd) Run(
 						Config: map[string]interface{}{
 							"image": image,
 						},
-						Driver: "docker",
+						Resources: jobResources,
+						Driver:    "docker",
 					},
 				},
 			},

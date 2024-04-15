@@ -18,6 +18,12 @@ options:
   NOMAD_REGION:
     description: The region for the Nomad job
     default:
+  NOMAD_CPU:
+    description: The cpu in mhz to use for the Nomad Job
+    default: "200"
+  NOMAD_MEMORYMB:
+    description: The memory in mb to use for the Nomad Job
+    default: "512"
 agent:
   path: ${AGENT_PATH}
   dataPath: ${AGENT_DATA_PATH}

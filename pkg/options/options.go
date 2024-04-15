@@ -9,16 +9,25 @@ import (
 )
 
 type Options struct {
+	// Resources
 	DiskSize string
-	Token    string
+	CPU      string
+	MemoryMB string
 
 	JobId     string
 	Namespace string
 	Region    string
 	TaskName  string
 
+	Token string
+
 	DriverOpts *driver.RunOptions
 }
+
+const (
+	defaultCpu      = "200"
+	defaultMemoryMB = "512"
+)
 
 // Read ENV Vars for option overrides
 func FromEnv() (*Options, error) {
@@ -47,6 +56,8 @@ func DefaultOptions() (*Options, error) {
 		Namespace:  getEnv("NOMAD_NAMESPACE", ""),
 		Region:     getEnv("NOMAD_REGION", ""),
 		TaskName:   "devpod",
+		CPU:        getEnv("NOMAD_CPU", defaultCpu),
+		MemoryMB:   getEnv("NOMAD_MEMORYMB", defaultMemoryMB),
 		JobId:      getEnv("DEVCONTAINER_ID", "devpod-nomad"), // set by devpod
 		DriverOpts: runOptions,
 	}, nil
