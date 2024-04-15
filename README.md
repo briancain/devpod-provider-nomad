@@ -30,7 +30,21 @@ devpod up <repository-url> --provider nomad
 
 ### Provider Configurations
 
-TODO
+Set this options through DevPod to configure them when DevPod launches the
+Nomad job during a workspace creation.
+
+- NOMAD_NAMESPACE:
+  + description: The namespace for the Nomad job
+  + default:
+- NOMAD_REGION:
+  + description: The region for the Nomad job
+  + default:
+- NOMAD_CPU:
+  + description: The cpu in mhz to use for the Nomad Job
+  + default: "200"
+- NOMAD_MEMORYMB:
+  + description: The memory in mb to use for the Nomad Job
+  + default: "512"
 
 ## Testing Locally
 
