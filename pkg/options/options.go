@@ -44,8 +44,8 @@ func DefaultOptions() (*Options, error) {
 	return &Options{
 		DiskSize:   "10G",
 		Token:      "",
-		Namespace:  "",
-		Region:     "",
+		Namespace:  getEnv("NOMAD_NAMESPACE", ""),
+		Region:     getEnv("NOMAD_REGION", ""),
 		TaskName:   "devpod",
 		JobId:      getEnv("DEVCONTAINER_ID", "devpod-nomad"), // set by devpod
 		DriverOpts: runOptions,

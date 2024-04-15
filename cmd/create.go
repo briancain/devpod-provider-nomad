@@ -55,6 +55,7 @@ func (cmd *CreateCmd) Run(
 		ID:        &options.JobId,
 		Name:      &jobName,
 		Namespace: &options.Namespace,
+		Region:    &options.Region,
 		TaskGroups: []*api.TaskGroup{
 			{
 				Name: &jobName,

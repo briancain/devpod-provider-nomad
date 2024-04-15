@@ -12,6 +12,12 @@ options:
   AGENT_DATA_PATH:
     description: The path where to store the agent data.
     default: /home/devpod/.devpod/agent
+  NOMAD_NAMESPACE:
+    description: The namespace for the Nomad job
+    default:
+  NOMAD_REGION:
+    description: The region for the Nomad job
+    default:
 agent:
   path: ${AGENT_PATH}
   dataPath: ${AGENT_DATA_PATH}
