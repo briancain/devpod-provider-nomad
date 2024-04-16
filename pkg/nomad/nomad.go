@@ -94,7 +94,6 @@ func (n *Nomad) Status(
 	return client.StatusNotFound, job, nil
 }
 
-// Untested
 // Run a command on the instance
 func (n *Nomad) CommandDevContainer(
 	ctx context.Context,
