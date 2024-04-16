@@ -10,6 +10,8 @@ DevPod using [HashiCorp Nomad](https://www.nomadproject.io/).
 Please report any issues or feature requests to the
 [Github Issues](https://github.com/briancain/devpod-provider-nomad/issues) page.
 
+This project is still a work in progress, excuse our mess! <3
+
 [devpod.sh](https://devpod.sh/)
 
 ## Getting Started
