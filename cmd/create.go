@@ -12,6 +12,7 @@ import (
 
 const (
 	defaultImage = "alpine"
+	defaultUser  = "root"
 )
 
 // CreateCmd holds the cmd flags
@@ -45,10 +46,29 @@ func (cmd *CreateCmd) Run(
 		return err
 	}
 
+	// DevPod run option overrides for job
 	image := defaultImage
-	if options.DriverOpts != nil && options.DriverOpts.Image != "" {
-		image = options.DriverOpts.Image
-	}
+	user := defaultUser
+	env := map[string]string{}
+	entrypoint := ""
+	runCmd := []string{"sleep", "infinity"}
+	if options.DriverOpts != nil {
+		if options.DriverOpts.Image != "" {
+			image = options.DriverOpts.Image
+		}
+		if options.DriverOpts.User != "" {
+			user = options.DriverOpts.User
+		}
+		if options.DriverOpts.Env != nil {
+			env = options.DriverOpts.Env
+		}
+		if options.DriverOpts.Entrypoint != "" {
+			entrypoint = options.DriverOpts.Entrypoint
+		}
+		if options.DriverOpts.Cmd != nil {
+			runCmd = append([]string{entrypoint}, options.DriverOpts.Cmd...)
+		}
+	} // err if nil?
 
 	cpu, err := strconv.Atoi(options.CPU)
 	if err != nil {
@@ -76,8 +96,11 @@ func (cmd *CreateCmd) Run(
 				Tasks: []*api.Task{
 					{
 						Name: options.TaskName,
+						User: user,
+						Env:  env,
 						Config: map[string]interface{}{
 							"image": image,
+							"args":  runCmd,
 						},
 						Resources: jobResources,
 						Driver:    "docker",
